@@ -4,15 +4,10 @@ const HtmlPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
-  mode: 'production',
   output: {
     filename: 'bundle.js',
     path: path.join(__dirname,'build')
   },
-  devServer: {
-    port: 3000
-  },
-  devtool: 'inline-source-map',
   module: {
     rules: [
       {
@@ -21,12 +16,26 @@ module.exports = {
         use: ['babel-loader']
       },
       {
+        test: /\.html$/,
+        use: [{
+          loader: 'html-loader',
+          options: {
+            attrs: [':src']
+          }
+        }]
+      },
+      {
         test: /\.sass$/,
         exclude: /node_modules/,
         use: ExtractTextPlugin.extract([
           'css-loader',
           'sass-loader'
         ])
+      },
+      {
+        test: /\.(jpe?g|png|gif)$/,
+        exclude: /node_modules/,
+        use: ['file-loader']
       }
     ]
   },

@@ -21,6 +21,10 @@ module.exports = {
         use: ['babel-loader']
       },
       {
+        test: /\.html$/,
+        use: ['html-loader']
+      },
+      {
         test: /\.sass$/,
         exclude: /node_modules/,
         use: [

@@ -5,18 +5,86 @@
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Friends</title>
-  <script src="https://vk.com/js/api/openapi.js?152" type="text/javascript"></script>
+  <title>Chat</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,700');
+  </style>
+  <!--<link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,700" rel="stylesheet"-->
 </head>
 <body>
-  <button class="btn">Load info</button>
-  <ul class="list"></ul>
-  <script id="user-template" type="text/x-handlebars-template">
-    <div>
-      <img src="{{photo_100}}" alt="User photo">
-      <h1>{{first_name}} {{last_name}}</h1>
+  <div class="wrapper">
+    <aside class="sidebar">
+      <div class="user-info">
+        <img class="user-info__img" src="./assets/noImage.png" alt="User img">
+        <h1 class="user-info__name">Добро пожаловать</h1>
+      </div>
+      <div class="users"></div>
+    </aside>
+    <main class="content">
+      <div class="popup-wrapper"></div>
+      <div class="messages"></div>
+      <div class="add-message">
+        <input type="text" class="add-message__input" placeholder="Введите сообщение" id="inputMessage">
+        <button class="add-message__btn" id="addMessage">Отправить</button>
+      </div>
+    </main>
+  </div>
+  <script id="messages-template" type="text/x-handlebars-template">
+    <ul class="messages__list">
+      {{#each messages}}
+        <li class="messages__item">
+          <img src="{{img}}" class="messages__img" alt="User avatar">
+          <div class="messages__info">
+            <span class="messages__name">{{name}}</span>
+            <span class="messages__date">{{date}}</span>
+            <p class="messages__text">{{text}}</p>
+          </div>
+        </li>
+      {{/each}}
+    </ul>
+  </script>
+  <script id="users-template" type="text/x-handlebars-template">
+    <h4 class="users__title">Участники ({{size}})</h4>
+    <ul class="users__list">
+      {{#each users}}
+        <li class="users__item">{{name}}</li>
+      {{/each}}
+    </ul>
+  </script>
+  <script id="user-info-template" type="text/x-handlebars-template">
+    <img class="user-info__img user-info__img_avatar" id="changeImg" src="{{img}}" alt="User img">
+    <h1 class="user-info__name">{{name}}</h1>
+  </script>
+  <script id="auth-template" type="text/x-handlebars-template">
+    <div class="popup-wrapper">
+      <div class="popup">
+        <h2 class="popup__title">Авторизация</h2>
+        <div class="popup__content">
+          <form class="auth">
+            <input type="text" name="name" placeholder="ФИО" class="auth__input">
+            <input type="text" name="login" placeholder="Ник" class="auth__input">
+            <button class="auth__btn">Войти</button>
+          </form>
+        </div>
+      </div>
     </div>
   </script>
-  <!--<script src="bundle.js"></script>-->
+  <script id="load-avatar-template" type="text/x-handlebars-template">
+      <div class="popup">
+        <h2 class="popup__title">Загрузка фото</h2>
+        <div class="popup__content">
+          <div class="file">
+            <div class="file__content">
+              <input type="file" class="file__input" id="fileInput">
+              Перетащите сюда фото
+            </div>
+            <div class="file__btns">
+              <button class="file__btn" id="fileClose">Отмена</button>
+              <button class="file__btn" id="fileLoad">Загрузить</button>
+            </div>
+          </div>
+        </div>
+      </div>
+  </script>
 </body>
 </html>
